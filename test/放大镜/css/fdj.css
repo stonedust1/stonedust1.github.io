@@ -1,0 +1,72 @@
+.picture {
+    display: flex;
+}
+.stage {
+    width: 400px;
+    height: 400px;
+    position: relative;
+}
+.stage:hover {
+    cursor: zoom-in;
+}
+.stage img {
+    width: 100%;
+}
+.stage .mask{
+    width: 200px;
+    height: 200px;
+    background-image: url("../mask-bg.png");
+    /* background-color: rgba(255, 0, 0, 0.342); */
+    position: absolute;
+    top: 200px;
+    left: 200px;
+}
+
+.preview {
+    width: 400px;
+    height: 400px;
+    box-shadow: 0 0 5px 0 rgb(153, 153, 153);
+    overflow: hidden;
+    margin-left: 20px;
+    position: relative;
+}
+.preview img {
+    width: 200%;
+    position: absolute;
+    top: -400px;
+    left: -400px;
+}
+
+ul {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+.btns {
+    width: 200px;
+    /* background-color: gray; */
+    display: flex;
+    flex: 1;
+    justify-content: space-evenly;
+}
+.btns li {
+    width: 33%;
+    text-align: center;
+}
+.btns li.active {
+    /* background-color: red; */
+    color: white;
+}
+
+.btns img{
+    width: 50px;
+    height: 50px;
+}
+
+.tab-contents li {
+    display: none;
+}
+.tab-contents li.active {
+    color: blue;
+    display: block;
+}

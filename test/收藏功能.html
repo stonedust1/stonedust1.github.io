@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Music Collection</title>
+    <style>
+        ul {
+            float: left;
+            border: 1px solid black;
+            border-collapse: collapse;
+            width: 300px;
+            height: 330px;
+        }
+
+        #collectList {
+            margin-top: 20px;
+        }
+
+        .song {
+            margin-bottom: 10px;
+        }
+
+        button {
+            float: right;
+            margin-left: 100px;
+            cursor: pointer;
+        }
+
+        .collect {
+            background-color: red;
+            color: white;
+        }
+
+        .uncollect {
+            background-color: gray;
+            color: white;
+        }
+    </style>
+</head>
+
+<body>
+    <table>
+        <ul id="songContainer"></ul>
+    </table>
+    <div id="collectList"></div>
+
+    <script>
+
+        /*
+ 每一首歌都有一个 “收藏/取消收藏” 按钮
+ 当歌曲已被收藏时按钮显式“取消收藏”，否则显式“收藏”
+ 创建一个收藏列表，将所有已收藏的歌曲展示在列表中
+ 将收藏的歌曲信息存储在localStorage中持久保存，保证每次打开页面已收藏的歌曲都会正确展示在收藏列表中
+ 数据:
+ */
+        var songs = [
+            { id: 1, name: "会不会（吉他版）" },
+            { id: 2, name: "是但求其爱" },
+            { id: 3, name: "我很好（吉他版）" },
+            { id: 4, name: "海底" },
+            { id: 5, name: "执迷不悟" },
+            { id: 6, name: "他只是经过" },
+            { id: 7, name: "经济舱 (Live)" },
+            { id: 8, name: "是想你的声音啊" },
+            { id: 9, name: "苦尽甘来" },
+            { id: 10, name: "天外来物" },
+        ];
+        var collectList = JSON.parse(localStorage.getItem('collectList')) || [];
+
+        // 页面加载时从localStorage读取收藏列表
+        var collectList = JSON.parse(localStorage.getItem('collectList')) || [];
+
+        function toggleCollect(songId) {
+            var songIndex = collectList.findIndex(song => song.id === songId);
+            var button = document.getElementById('btn' + songId);
+            if (songIndex > -1) {
+                // 如果已收藏，则从收藏列表中移除并更改按钮状态
+                collectList.splice(songIndex, 1);
+                button.className = 'uncollect';
+                button.textContent = '收藏';
+            } else {
+                // 如果未收藏，则添加到收藏列表并更改按钮状态
+                var song = songs.find(song => song.id === songId);
+                collectList.push(song);
+                button.className = 'collect';
+                button.textContent = '取消收藏';
+            }
+            // 更新localStorage
+            localStorage.setItem('collectList', JSON.stringify(collectList));
+        }
+
+        function renderSongs() {
+            var songContainer = document.getElementById('songContainer');
+            songContainer.innerHTML = ''; // 清空歌曲列表容器
+            songs.forEach(song => {
+                var songElement = document.createElement('div');
+                songElement.className = 'song';
+                var buttonId = 'btn' + song.id;
+                var isCollected = collectList.some(collectedSong => collectedSong.id === song.id);
+                var button = document.createElement('button');
+                button.id = buttonId;
+                button.textContent = isCollected ? '取消收藏' : '收藏';
+                button.className = isCollected ? 'collect' : 'uncollect';
+                button.onclick = function () { toggleCollect(song.id); };
+                songElement.appendChild(button);
+                songElement.insertBefore(document.createTextNode(song.name), button);
+                songContainer.appendChild(songElement);
+            });
+        }
+
+
+        // 页面加载时渲染歌曲列表和收藏列表
+        renderSongs();
+    </script>
+</body>
+
+</html>

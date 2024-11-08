@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>滚动歌词</title>
+    <style>
+        .lyric-container {
+            overflow: auto;
+            height: 300px;
+            width: 300px;
+            position: relative;
+            background-color: #f8f8f8;
+            color: #333;
+            font-size: 16px;
+            line-height: 1.6;
+            padding: 20px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            font-family: 'Arial', sans-serif; /* 设置字体 */
+            text-align: center; /* 文本居中 */
+        }
+        
+        .lyric-content {
+            position: relative;
+            white-space: normal;
+            width: 300px;
+        }
+
+        .line {
+            transition: color 0.5s ease-in-out, opacity 0.5s ease-in-out, transform 0.5s ease-in-out;
+            cursor: pointer;
+            padding: 4px 0;
+            text-align: center; /* 歌词文本居中对齐 */
+        }
+
+        .current {
+            color: #ff6666;
+            opacity: 1;
+            transform: scale(1.1); /* 当前行歌词放大 */
+        }
+
+        .hidden {
+            opacity: 0;
+            transition: opacity 0.5s ease-in-out;
+        }
+
+        .lyric-container {
+  overflow-y: auto; /* 允许垂直方向上的滚动条 */
+  height: 300px; /* 固定容器的高度 */
+  width: 300px; /* 容器的宽度，根据需要设置 */
+  position: relative;
+  background-color: #f8f8f8;
+  color: #333;
+  font-size: 16px;
+  line-height: 1.6;
+  padding: 20px;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+  font-family: 'Arial', sans-serif;
+  text-align: center;
+}
+
+/* 自定义滚动条样式 */
+.lyric-container::-webkit-scrollbar {
+  width: 8px; /* 纵向滚动条的宽度 */
+  height: 8px; /* 横向滚动条的高度 */
+}
+
+.lyric-container::-webkit-scrollbar-thumb {
+  background-color: #cccccc; /* 滑块颜色 */
+  border-radius: 4px; /* 滑块边角的圆角 */
+}
+
+.lyric-container::-webkit-scrollbar-track {
+  background-color: #f8f8f8; /* 轨道颜色 */
+}
+
+        /* 优化歌词点击效果 */
+        .line:hover {
+            background-color: #0066ff;
+             /* 鼠标悬停时的背景色 */
+        }
+
+        .line:active {
+            background-color: #d0d0d0; /* 鼠标点击时的背景色 */
+        }
+
+        /* 响应式设计 */
+        @media (max-width: 768px) {
+            .lyric-container {
+                font-size: 14px; /* 在小屏幕上使用较小的字体 */
+                padding: 10px; /* 减少内边距 */
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="lyric-container">
+        <div class="lyric-content" id="lyricContent"></div>
+    </div>
+    <audio controls src="./c48c_fb99_1950_a0634034446f904929e37dc2686ba91b.mp3"></audio>   
+
+    <script>
+        var lyric =
+    "[00:00.000] 作词 : 张国祥\n[00:01.000] 作曲 : 汤小康\n[00:04.050]\n[00:12.570]难以忘记初次见你\n[00:16.860]一双迷人的眼睛\n[00:21.460]在我脑海里\n[00:23.960]你的身影 挥散不去\n[00:30.160]握你的双手感觉你的温柔\n[00:34.940]真的有点透不过气\n[00:39.680]你的天真 我想珍惜\n[00:43.880]看到你受委屈 我会伤心\n[00:48.180]喔\n[00:50.340]只怕我自己会爱上你\n[00:55.070]不敢让自己靠的太近\n[00:59.550]怕我没什么能够给你\n[01:04.030]爱你也需要很大的勇气\n[01:08.190]只怕我自己会爱上你\n[01:12.910]也许有天会情不自禁\n[01:17.380]想念只让自己苦了自己\n[01:21.840]爱上你是我情非得已\n[01:28.810]难以忘记初次见你\n[01:33.170]一双迷人的眼睛\n[01:37.700]在我脑海里 你的身影 挥散不去\n[01:46.360]握你的双手感觉你的温柔\n[01:51.120]真的有点透不过气\n[01:55.910]你的天真 我想珍惜\n[02:00.150]看到你受委屈 我会伤心\n[02:04.490]喔\n[02:06.540]只怕我自己会爱上你\n[02:11.240]不敢让自己靠的太近\n[02:15.750]怕我没什么能够给你\n[02:20.200]爱你也需要很大的勇气\n[02:24.570]只怕我自己会爱上你\n[02:29.230]也许有天会情不自禁\n[02:33.680]想念只让自己苦了自己\n[02:38.140]爱上你是我情非得已\n[03:04.060]什么原因 耶\n[03:07.730]我竟然又会遇见你\n[03:13.020]我真的真的不愿意\n[03:16.630]就这样陷入爱的陷阱\n[03:20.700]喔\n[03:22.910]只怕我自己会爱上你\n[03:27.570]不敢让自己靠的太近\n[03:32.040]怕我没什么能够给你\n[03:36.560]爱你也需要很大的勇气\n[03:40.740]只怕我自己会爱上你\n[03:45.460]也许有天会情不自禁\n[03:49.990]想念只让自己苦了自己\n[03:54.510]爱上你是我情非得已\n[03:58.970]爱上你是我情非得已\n[04:03.000]\n";
+
+var arr = lyric.split("\n").filter((item) => item);
+var parsedLyric = arr.map(function (item, index) {
+    var res = item.match(/\[(\d{2}):(\d{2}\.\d{3})\]\s*(.*)/);
+    return {
+        time: parseFloat(res[1]) * 60 + parseFloat(res[2]),
+        text: res[3]
+    };
+});
+
+var audio = document.querySelector("audio");
+var lyricContent = document.getElementById("lyricContent");
+
+function renderLyric() {
+    var html = parsedLyric.map(function (item) {
+        return '<div class="line" data-time="' + item.time + '" onclick="jumpToTime(' + item.time + ')">' + item.text + '</div>';
+    }).join('');
+    lyricContent.innerHTML = html;
+}
+
+function jumpToTime(time) {
+    audio.currentTime = time;
+}
+
+
+
+function scrollToLine(line) {
+    var lyricContainer = lyricContent.parentElement || lyricContent.offsetParent;
+    var lineTop = line.offsetTop;
+    var containerHeight = lyricContainer.offsetHeight;
+    var lineHeight = line.offsetHeight;
+    var scrollTop = lineTop - containerHeight / 2 + lineHeight / 2;
+
+    // 确保滚动位置在可滚动范围内
+    scrollTop = Math.max(0, Math.min(scrollTop, lyricContainer.scrollHeight - containerHeight));
+
+    lyricContainer.scrollTop = scrollTop;
+}
+function updateLyricDisplay() {
+    var currentObj = parsedLyric.reduce(function(prev, curr) {
+        return curr.time <= audio.currentTime && curr.time > prev.time ? curr : prev;
+    }, {time: -1});
+
+    if (currentObj.time !== -1) {
+        var currentLines = lyricContent.querySelectorAll('.line.current');
+        currentLines.forEach(function(line) {
+            line.classList.remove('current');
+        });
+        var nextLine = lyricContent.querySelector('.line[data-time="' + currentObj.time + '"]');
+        if (nextLine) {
+            nextLine.classList.add('current');
+            scrollToLine(nextLine); // 使用修改后的 scrollToLine 函数
+        }
+    }
+}
+
+
+audio.ontimeupdate = function () {
+    updateLyricDisplay();
+};
+
+audio.onplay = function() {
+    updateLyricDisplay();
+};
+
+renderLyric();
+updateLyricDisplay();
+
+    </script>
+</body>
+</html>
